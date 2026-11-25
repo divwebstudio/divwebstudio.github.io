@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Игорь — сайты и Telegram-боты для малого бизнеса</title>
+<meta name="description" content="Делаю сайты и Telegram-ботов для кафе, салонов, перевозчиков и других небольших компаний. Портфолио и контакты.">
+<meta name="theme-color" content="#1c0812">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c0812;
+    --bg-2: #260b19;
+    --card: rgba(58, 16, 38, .55);
+    --line: rgba(255, 190, 220, .12);
+    --text: #fdf0f5;
+    --muted: #d0aabb;
+    --wine: #e0335f;
+    --rose: #ff6b9a;
+    --violet: #9d5cff;
+    --lilac: #c9a2ff;
+    --grad: linear-gradient(120deg, #e0335f 0%, #b63ad8 55%, #8a5bff 100%);
+    --radius: 24px;
+    --max: 1160px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Manrope", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; max-width: 100%; }
+  .wrap { width: min(var(--max), 100% - 32px); margin-inline: auto; position: relative; }
+  .serif {
+    font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 500;
+    background: linear-gradient(100deg, #ff7aa5, #d77bff 60%, #a98bff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    padding-right: .08em;
+  }
+
+  /* Живой фон: плавающие бордовые и фиолетовые пятна */
+  .bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .bg-blobs i {
+    position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55;
+    animation: float 22s ease-in-out infinite alternate;
+  }
+  .bg-blobs i:nth-child(1) { width: 620px; height: 620px; background: #8e1538; top: -160px; left: -140px; }
+  .bg-blobs i:nth-child(2) { width: 560px; height: 560px; background: #5b23b5; top: 30%; right: -200px; animation-duration: 28s; }
+  .bg-blobs i:nth-child(3) { width: 480px; height: 480px; background: #b0204f; bottom: -200px; left: 25%; animation-duration: 25s; opacity: .4; }
+  @keyframes float {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(80px, 60px) scale(1.12); }
+    100% { transform: translate(-40px, 120px) scale(.95); }
+  }
+  .bg-grain {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Навигация */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(28, 8, 18, .6);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 86px; }
+  .logo img { height: 74px; width: auto; transition: filter .3s; }
+  .logo:hover img { filter: drop-shadow(0 0 10px rgba(200, 92, 255, .8)); }
+  .nav-links { display: flex; gap: 30px; font-size: 15px; color: var(--muted); }
+  .nav-links a { position: relative; transition: color .2s; }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px;
+    background: var(--grad); transform: scaleX(0); transition: transform .3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* Светящиеся кнопки */
+  .btn {
+    position: relative; display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 26px; border-radius: 999px; border: 0; cursor: pointer;
+    font: 700 15px "Manrope", sans-serif; color: #fff;
+    background: var(--grad); background-size: 160% 100%; background-position: 0 0;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.12) inset, 0 8px 28px -6px rgba(224, 51, 95, .7), 0 0 40px -10px rgba(157, 92, 255, .8);
+    transition: transform .25s, box-shadow .25s, background-position .5s;
+    isolation: isolate;
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: -3px; border-radius: inherit; z-index: -1;
+    background: var(--grad); filter: blur(14px); opacity: .55; transition: opacity .25s;
+  }
+  .btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    background-position: 100% 0;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.25) inset, 0 14px 40px -6px rgba(224, 51, 95, .9), 0 0 60px -4px rgba(157, 92, 255, .9);
+  }
+  .btn:hover::before { opacity: 1; }
+  .btn:active { transform: translateY(0) scale(.98); }
+  .btn.pulse::before { animation: pulse 2.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: .45; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+  .btn.ghost {
+    background: rgba(255,255,255,.04); color: var(--text);
+    box-shadow: 0 0 0 1px rgba(201, 162, 255, .35) inset;
+  }
+  .btn.ghost::before { opacity: 0; }
+  .btn.ghost:hover {
+    background: rgba(157, 92, 255, .14);
+    box-shadow: 0 0 0 1px rgba(201, 162, 255, .8) inset, 0 0 34px -4px rgba(157, 92, 255, .8);
+  }
+  .btn.ghost:hover::before { opacity: .5; }
+  .btn.small { padding: 10px 20px; font-size: 14px; }
+
+  /* Первый экран */
+  .hero { padding: 120px 0 90px; position: relative; overflow: hidden; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+    font-size: 14px; color: var(--muted); background: rgba(255,255,255,.04); backdrop-filter: blur(8px);
+  }
+  .tag i { width: 8px; height: 8px; border-radius: 50%; background: #5eea8a; box-shadow: 0 0 12px #5eea8a; animation: blink 2s infinite; }
+  @keyframes blink { 50% { opacity: .35; } }
+  .hero h1 {
+    font-size: clamp(42px, 7.4vw, 92px); line-height: 1.02; letter-spacing: -.035em;
+    font-weight: 800; margin: 28px 0 26px; max-width: 14ch;
+  }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+
+  /* Вращающийся значок справа от заголовка */
+  .orbit {
+    position: absolute; right: 2%; top: 60px; width: 300px; height: 300px;
+    pointer-events: none;
+  }
+  .orbit .ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, #e0335f, #b63ad8, #8a5bff, #ff6b9a, #e0335f);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+    animation: spin 14s linear infinite; opacity: .8;
+  }
+  .orbit .ring.r2 { inset: 40px; animation-duration: 9s; animation-direction: reverse; opacity: .5; }
+  .orbit .core {
+    position: absolute; inset: 95px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ff8fb3, #b63ad8 45%, #4a1580 100%);
+    box-shadow: 0 0 80px 10px rgba(182, 58, 216, .55), 0 0 140px 30px rgba(224, 51, 95, .3);
+    animation: bob 6s ease-in-out infinite;
+  }
+  .orbit .dot {
+    position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%;
+    background: #fff; box-shadow: 0 0 18px 4px #ff6b9a;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes bob { 50% { transform: translateY(-14px) scale(1.04); } }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 80px;
+  }
+  .stats > div {
+    padding: 22px 24px; border-radius: 20px; border: 1px solid var(--line);
+    background: var(--card); backdrop-filter: blur(10px);
+  }
+  .stats b {
+    display: block; font-size: 38px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stats span { color: var(--muted); font-size: 15px; }
+
+  /* Бегущая строка */
+  .marquee {
+    overflow: hidden; border-block: 1px solid var(--line); padding: 18px 0;
+    background: rgba(255,255,255,.02); transform: rotate(-1.5deg); margin: 0 -20px;
+  }
+  .marquee-wrap { overflow: hidden; padding: 30px 0 10px; }
+  .marquee-track { display: flex; gap: 48px; width: max-content; animation: run 30s linear infinite; }
+  .marquee span { font-size: 22px; font-weight: 700; white-space: nowrap; color: var(--muted); }
+  .marquee span::before { content: "✦"; margin-right: 48px; color: var(--rose); }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  section { padding: 100px 0; }
+  .eyebrow {
+    display: inline-block; font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--lilac); padding: 6px 14px; border-radius: 999px;
+    background: rgba(157, 92, 255, .12); border: 1px solid rgba(157, 92, 255, .3);
+  }
+  h2 { font-size: clamp(32px, 4.6vw, 56px); line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 18px 0 18px; }
+  .section-lead { color: var(--muted); font-size: 18px; max-width: 56ch; }
+
+  /* Карточки со светящейся рамкой, которая следует за курсором */
+  .glow-card {
+    position: relative; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); backdrop-filter: blur(12px);
+    transition: transform .35s, border-color .35s;
+  }
+  .glow-card::before {
+    content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 107, 154, .9), rgba(157, 92, 255, .6) 40%, transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .35s;
+  }
+  .glow-card::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), rgba(182, 58, 216, .12), transparent 60%);
+    opacity: 0; transition: opacity .35s;
+  }
+  .glow-card:hover { transform: translateY(-6px); }
+  .glow-card:hover::before, .glow-card:hover::after { opacity: 1; }
+
+  /* Услуги */
+  .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 50px; }
+  .service { padding: 32px; }
+  .service .ico {
+    width: 58px; height: 58px; border-radius: 18px; display: grid; place-items: center; font-size: 28px;
+    background: var(--grad); box-shadow: 0 10px 30px -8px rgba(224, 51, 95, .8);
+  }
+  .service h3 { font-size: 21px; margin: 20px 0 8px; letter-spacing: -.01em; }
+  .service p { color: var(--muted); font-size: 15.5px; }
+
+  /* Сайты */
+  .site-case {
+    display: grid; grid-template-columns: 1.25fr 1fr;
+    border-radius: 30px; overflow: hidden; margin-top: 44px;
+  }
+  .site-case:nth-of-type(even) { grid-template-columns: 1fr 1.25fr; }
+  .site-case:nth-of-type(even) .shot { order: 2; }
+  .shot { position: relative; background: #0c0308; overflow: hidden; min-height: 320px; border-radius: 30px 0 0 30px; }
+  .site-case:nth-of-type(even) .shot { border-radius: 0 30px 30px 0; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; padding-top: 30px; transition: transform .9s ease; }
+  .site-case:hover .shot img { transform: scale(1.05); }
+  .shot::after {
+    content: "Открыть ↗"; position: absolute; left: 50%; top: 55%; z-index: 3;
+    transform: translate(-50%, -50%) scale(.85); opacity: 0;
+    padding: 12px 22px; border-radius: 999px; font-weight: 700; color: #fff;
+    background: var(--grad); box-shadow: 0 0 40px rgba(182, 58, 216, .9);
+    transition: opacity .3s, transform .3s;
+  }
+  .site-case:hover .shot::after { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .browser-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 30px; z-index: 2;
+    background: rgba(25, 7, 16, .92); display: flex; align-items: center; gap: 6px; padding-left: 14px;
+  }
+  .browser-bar i { width: 9px; height: 9px; border-radius: 50%; }
+  .browser-bar i:nth-child(1) { background: #ff5f7e; }
+  .browser-bar i:nth-child(2) { background: #c77dff; }
+  .browser-bar i:nth-child(3) { background: #7b6cff; }
+  .case-body { padding: 44px 42px; display: flex; flex-direction: column; position: relative; z-index: 1; }
+  .case-type { font-size: 13px; color: var(--rose); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .case-body h3 { font-size: 32px; letter-spacing: -.02em; margin: 10px 0 14px; line-height: 1.15; }
+  .case-body > p { color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 30px; }
+  .chips span {
+    font-size: 13px; padding: 6px 12px; border-radius: 999px; color: #f2d6e2;
+    background: rgba(157, 92, 255, .1); border: 1px solid rgba(201, 162, 255, .22);
+  }
+  .case-body .btn { margin-top: auto; align-self: flex-start; }
+
+  /* Боты */
+  .bots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 50px; }
+  .bot { padding: 26px; display: flex; flex-direction: column; border-radius: 30px; }
+  .phone {
+    position: relative; width: 100%; max-width: 250px; margin: 0 auto 26px; aspect-ratio: 9 / 16;
+    border-radius: 34px; padding: 9px; background: #0a0206;
+    border: 1px solid rgba(201, 162, 255, .3);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,.8), 0 0 50px -12px rgba(182, 58, 216, .7);
+    transition: box-shadow .35s, transform .35s;
+  }
+  .bot:hover .phone { transform: rotate(-2deg) scale(1.02); box-shadow: 0 30px 60px -20px rgba(0,0,0,.8), 0 0 70px -6px rgba(224, 51, 95, .8); }
+  .phone video { width: 100%; height: 100%; object-fit: cover; object-position: bottom; border-radius: 26px; background: #6f9a6a; }
+  .bot h3 { font-size: 22px; letter-spacing: -.01em; margin: 8px 0 8px; }
+  .bot > p { color: var(--muted); font-size: 15.5px; }
+  .bot ul { list-style: none; margin: 18px 0 4px; display: grid; gap: 8px; font-size: 15px; }
+  .bot li { display: flex; gap: 10px; }
+  .bot li::before {
+    content: "✓"; flex: none; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 11px; font-weight: 800; color: #fff; background: var(--grad); margin-top: 2px;
+  }
+  .bot .fit { margin-top: auto; padding-top: 18px; font-size: 14px; color: var(--muted); border-top: 1px dashed var(--line); }
+  .bot .fit b { color: var(--text); font-weight: 600; }
+
+  /* Карточки для маркетплейсов */
+  .mp-case { display: grid; grid-template-columns: 300px 1fr; gap: 40px; padding: 40px; border-radius: 30px; margin-top: 44px; align-items: center; }
+  .mp-case .phone { margin: 0; max-width: 300px; }
+  .mp-case .phone video { object-position: center; background: #0a0206; }
+  .sound-btn {
+    position: absolute; right: 18px; bottom: 18px; z-index: 2; border: 0; cursor: pointer;
+    padding: 8px 14px; border-radius: 999px; font: 700 13px "Manrope", sans-serif; color: #fff;
+    background: rgba(10, 2, 6, .7); backdrop-filter: blur(8px); box-shadow: 0 0 0 1px rgba(201, 162, 255, .4) inset;
+  }
+  .sound-btn:hover { box-shadow: 0 0 0 1px rgba(201, 162, 255, .9) inset, 0 0 20px rgba(157, 92, 255, .7); }
+  .mp-slides { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin: 24px 0 0; }
+  .mp-slides a { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 3 / 4; }
+  .mp-slides img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .mp-slides a:hover img { transform: scale(1.06); }
+  .mp-case .case-body { padding: 0; }
+  @media (max-width: 960px) {
+    .mp-case { grid-template-columns: 1fr; padding: 28px 22px; }
+    .mp-case .phone { margin: 0 auto; max-width: 260px; }
+    .mp-slides { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Цены */
+  .prices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 50px; }
+  .price { padding: 32px 30px; display: flex; flex-direction: column; }
+  .price h3 { font-size: 20px; letter-spacing: -.01em; }
+  .price .sum {
+    font-size: 38px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 14px 0 4px;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .price .sum small { font-size: 18px; font-weight: 700; }
+  .price p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+  .price .btn { margin-top: auto; align-self: flex-start; }
+  .price.hit { border-color: rgba(201, 162, 255, .5); box-shadow: 0 0 60px -20px rgba(182, 58, 216, .8); }
+  .price .badge {
+    position: absolute; top: -13px; right: 24px; padding: 5px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff;
+    background: var(--grad); box-shadow: 0 6px 20px -4px rgba(224, 51, 95, .8);
+  }
+  .price.wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 36px; }
+  .price.wide .sum { margin-bottom: 0; }
+  .price.wide p { margin: 0; flex: 1; }
+  .price.wide .btn { margin-top: 0; flex: none; }
+  @media (max-width: 760px) {
+    .price.wide { flex-direction: column; align-items: flex-start; gap: 0; }
+    .price.wide p { margin: 4px 0 24px; }
+  }
+  .price-note { margin-top: 28px; color: var(--muted); font-size: 15px; text-align: center; }
+
+  /* Этапы */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 50px; counter-reset: s; }
+  .step { padding: 30px; }
+  .step::before {
+    counter-increment: s; content: "0" counter(s);
+    font-family: "Playfair Display", serif; font-style: italic; font-size: 44px; line-height: 1;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .step h3 { font-size: 18px; margin: 14px 0 6px; }
+  .step p { font-size: 15px; color: var(--muted); }
+
+  /* Контакты */
+  .cta {
+    position: relative; overflow: hidden; text-align: center; border-radius: 36px; padding: 90px 28px;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(224, 51, 95, .45), transparent 55%),
+      radial-gradient(ellipse at 85% 100%, rgba(138, 91, 255, .5), transparent 55%),
+      #2a0b1c;
+    border: 1px solid rgba(255, 190, 220, .2);
+  }
+  .cta h2 { max-width: 18ch; margin-inline: auto; }
+  .cta p { color: var(--muted); font-size: 18px; max-width: 48ch; margin: 0 auto 36px; }
+  .cta .hero-actions { justify-content: center; margin-top: 0; }
+  .cta .btn { font-size: 17px; padding: 18px 34px; }
+
+  footer { padding: 40px 0 50px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  /* Появление при прокрутке */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.on { opacity: 1; transform: none; }
+  .reveal.done { transition: transform .35s, border-color .35s; transition-delay: 0s; }
+  .glow-card.reveal.on:hover { transform: translateY(-6px); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; }
+  }
+
+  @media (max-width: 1100px) { .orbit { display: none; } }
+  @media (max-width: 960px) {
+    .services, .bots, .prices { grid-template-columns: 1fr 1fr; }
+    .steps, .stats { grid-template-columns: 1fr 1fr; }
+    .site-case, .site-case:nth-of-type(even) { grid-template-columns: 1fr; }
+    .site-case:nth-of-type(even) .shot { order: 0; }
+    .shot, .site-case:nth-of-type(even) .shot { aspect-ratio: 16 / 10.5; min-height: 0; border-radius: 30px 30px 0 0; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero { padding: 70px 0 60px; }
+    .services, .bots, .steps, .prices { grid-template-columns: 1fr; }
+    .prices { gap: 26px; }
+    .case-body { padding: 30px 24px; }
+    .case-body h3 { font-size: 26px; }
+    .stats { margin-top: 56px; }
+    .stats b { font-size: 30px; }
+    section { padding: 70px 0; }
+    .cta { padding: 60px 20px; }
+    .marquee span { font-size: 18px; }
+    .bg-blobs i { filter: blur(70px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="bg-grain" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo"><img src="img/logo/div-mesh.svg" alt="DIV"></a>
+    <div class="nav-links">
+      <a href="#services">Услуги</a>
+      <a href="#sites">Сайты</a>
+      <a href="#bots">Боты</a>
+      <a href="#marketplace">Маркетплейсы</a>
+      <a href="#prices">Цены</a>
+      <a href="#process">Как работаю</a>
+    </div>
+    <a href="#contact" class="btn small">Обсудить проект</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="orbit" aria-hidden="true">
+      <div class="ring"><span class="dot"></span></div>
+      <div class="ring r2"></div>
+      <div class="core"></div>
+    </div>
+    <span class="tag reveal"><i></i>Беру новые проекты</span>
+    <h1 class="reveal">Сайты и боты, которые <span class="serif">приводят клиентов</span></h1>
+    <p class="lead reveal">Делаю сайты и Telegram-ботов для малого бизнеса: кафе, барбершопов, кофеен и перевозчиков. Ваши клиенты смогут найти вас, записаться и сделать заказ, даже когда вы не на связи.</p>
+    <div class="hero-actions reveal">
+      <a href="#sites" class="btn pulse">Смотреть работы ↓</a>
+      <a href="https://t.me/div_web" class="btn ghost" target="_blank" rel="noopener">Написать в Telegram</a>
+    </div>
+    <div class="stats">
+      <div class="reveal"><b>6</b><span>готовых проектов</span></div>
+      <div class="reveal"><b>2</b><span>сайта для бизнеса</span></div>
+      <div class="reveal"><b>3</b><span>Telegram-бота</span></div>
+      <div class="reveal"><b>24/7</b><span>боты принимают заявки</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee-wrap" aria-hidden="true"><div class="marquee">
+  <div class="marquee-track">
+    <span>Сайты для кафе</span><span>Боты для записи</span><span>Лендинги</span><span>Каталоги в Telegram</span><span>Карточки для Ozon</span><span>Адаптив под телефон</span><span>Запуск под ключ</span>
+    <span>Сайты для кафе</span><span>Боты для записи</span><span>Лендинги</span><span>Каталоги в Telegram</span><span>Карточки для Ozon</span><span>Адаптив под телефон</span><span>Запуск под ключ</span>
+  </div>
+</div></div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow reveal">Чем могу помочь</div>
+    <h2 class="reveal">Решаю задачи бизнеса, <span class="serif">а не просто верстаю</span></h2>
+    <p class="section-lead reveal">Вы рассказываете, чем занимаетесь и чего хотите. Я делаю инструмент, который это решает.</p>
+    <div class="services">
+      <div class="service glow-card reveal">
+        <div class="ico">🌐</div>
+        <h3>Сайт-визитка и лендинг</h3>
+        <p>Красивый и быстрый сайт: меню или услуги, фото, отзывы, карта, кнопки «позвонить» и «записаться». Удобно открывается с телефона.</p>
+      </div>
+      <div class="service glow-card reveal">
+        <div class="ico">🤖</div>
+        <h3>Telegram-бот</h3>
+        <p>Запись к мастеру, приём заказов, каталог с корзиной, обучение. Все заявки сразу приходят вам в Telegram.</p>
+      </div>
+      <div class="service glow-card reveal">
+        <div class="ico">🚀</div>
+        <h3>Запуск и поддержка</h3>
+        <p>Размещу сайт и бота в интернете, настрою, покажу, как менять цены и тексты. Если нужно, буду дорабатывать дальше.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sites">
+  <div class="wrap">
+    <div class="eyebrow reveal">Сайты</div>
+    <h2 class="reveal">Сайты, которые <span class="serif">хочется открыть</span></h2>
+    <p class="section-lead reveal">Наведите на скриншот или нажмите «Открыть сайт», чтобы посмотреть его вживую.</p>
+
+    <article class="site-case glow-card reveal">
+      <a class="shot" href="projects/ilyus.html" target="_blank" aria-label="Открыть сайт кафе «Илюс»">
+        <div class="browser-bar"><i></i><i></i><i></i></div>
+        <img src="img/ilyus.jpg" alt="Первый экран сайта кафе «Илюс»" loading="lazy">
+      </a>
+      <div class="case-body">
+        <div class="case-type">Кафе · сайт</div>
+        <h3>Кафе «Илюс»</h3>
+        <p>Сайт кафе с чебуреками у моря. Задача была показать еду так, чтобы захотелось прийти прямо сейчас: аппетитные фото, полное меню, атмосфера зала и живые отзывы гостей.</p>
+        <div class="chips">
+          <span>Меню с ценами</span><span>Галерея блюд</span><span>Отзывы гостей</span><span>Доставка</span><span>Адаптив под телефон</span>
+        </div>
+        <a class="btn" href="projects/ilyus.html" target="_blank">Открыть сайт →</a>
+      </div>
+    </article>
+
+    <article class="site-case glow-card reveal">
+      <a class="shot" href="projects/sv-transfer.html" target="_blank" aria-label="Открыть сайт SV перевозки">
+        <div class="browser-bar"><i></i><i></i><i></i></div>
+        <img src="img/sv-transfer.jpg" alt="Первый экран сайта пассажирских перевозок SV" loading="lazy">
+      </a>
+      <div class="case-body">
+        <div class="case-type">Пассажирские перевозки · сайт</div>
+        <h3>SV — Мелитополь&nbsp;— Батуми</h3>
+        <p>Премиальный лендинг для пассажирских перевозок. Интерактивный глобус, маршрут с остановкой в Тбилиси, автопарк и бронирование места в три шага. Цель — вызвать доверие и вести к заявке.</p>
+        <div class="chips">
+          <span>Интерактивный глобус</span><span>Маршрут</span><span>Автопарк</span><span>Бронирование</span><span>Тёмный дизайн</span>
+        </div>
+        <a class="btn" href="projects/sv-transfer.html" target="_blank">Открыть сайт →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="bots">
+  <div class="wrap">
+    <div class="eyebrow reveal">Telegram-боты</div>
+    <h2 class="reveal">Боты, которые <span class="serif">работают за вас</span></h2>
+    <p class="section-lead reveal">Каждый бот легко перенастроить под другой бизнес: названия, цены, услуги и часы работы меняются без переделки кода.</p>
+
+    <div class="bots">
+      <article class="bot glow-card reveal">
+        <div class="phone"><video src="video/barber-bot.mp4" poster="img/barber-bot-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="case-type">Барбершоп · запись</div>
+        <h3>Бот для записи клиентов</h3>
+        <p>Клиент записывается за три шага: услуга, день, время. Владелец сразу получает уведомление.</p>
+        <ul>
+          <li>Защита от двойной записи</li>
+          <li>«Мои записи» с отменой</li>
+          <li>Панель владельца /admin</li>
+          <li>Выходные дни скрываются сами</li>
+        </ul>
+        <p class="fit"><b>Подойдёт:</b> салонам красоты, мастерам маникюра, массажистам, репетиторам</p>
+      </article>
+
+      <article class="bot glow-card reveal">
+        <div class="phone"><video src="video/coffee-bot.mp4" poster="img/coffee-bot-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="case-type">Кофейня · заказы</div>
+        <h3>Каталог и заказы «Зерно»</h3>
+        <p>Мини-магазин внутри Telegram. Клиент выбирает товары, собирает корзину и оформляет заказ.</p>
+        <ul>
+          <li>Каталог по категориям</li>
+          <li>Корзина и оформление заказа</li>
+          <li>Телефон клиента в один клик</li>
+          <li>Вопросы приходят владельцу</li>
+        </ul>
+        <p class="fit"><b>Подойдёт:</b> кафе, пекарням, цветочным магазинам, магазинам одежды и косметики</p>
+      </article>
+
+      <article class="bot glow-card reveal">
+        <div class="phone"><video src="video/english-bot.mp4" poster="img/english-bot-poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="case-type">Обучение · тренажёр</div>
+        <h3>English для IT</h3>
+        <p>Тренажёр английских слов для программистов: карточки с транскрипцией и квизы.</p>
+        <ul>
+          <li>Карточки и квиз с вариантами</li>
+          <li>7 тематических категорий</li>
+          <li>Статистика ответов</li>
+          <li>Работает круглосуточно в облаке</li>
+        </ul>
+        <p class="fit"><b>Подойдёт:</b> онлайн-школам, репетиторам, авторам курсов</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="marketplace">
+  <div class="wrap">
+    <div class="eyebrow reveal">Маркетплейсы</div>
+    <h2 class="reveal">Карточки, которые <span class="serif">хочется купить</span></h2>
+    <p class="section-lead reveal">Из обычных фото с телефона делаю продающую карточку товара для Ozon: инфографику, видео и описание.</p>
+
+    <article class="mp-case glow-card reveal">
+      <div class="phone">
+        <video id="mpReel" src="video/ozon-ball-reel.mp4" poster="img/ozon-ball/reel-poster.jpg" muted loop playsinline preload="none"></video>
+        <button class="sound-btn" type="button" data-sound>🔇 Включить звук</button>
+      </div>
+      <div class="case-body">
+        <div class="case-type">Ozon · карточка товара</div>
+        <h3>Футбольный мяч Trionda Final 2026</h3>
+        <p>Клиент прислал 5 фото мяча, снятых на телефон. Я вырезал мяч из фона и собрал 6 слайдов инфографики в стиле самого мяча. Ещё сделал 15-секундный рилз: на стадионе забивают гол, а звуки трибун, свистка и удара я синтезировал сам. Плюс написал SEO-описание с характеристиками.</p>
+        <div class="chips">
+          <span>Инфографика 3:4</span><span>Рилз 9:16</span><span>Видеообложка</span><span>Звуки матча</span><span>Описание и характеристики</span>
+        </div>
+        <div class="mp-slides">
+          <a href="img/ozon-ball/01_main.jpg" target="_blank"><img src="img/ozon-ball/01_main.jpg" alt="Главный слайд карточки мяча" loading="lazy"></a>
+          <a href="img/ozon-ball/02_features.jpg" target="_blank"><img src="img/ozon-ball/02_features.jpg" alt="Слайд с преимуществами мяча" loading="lazy"></a>
+          <a href="img/ozon-ball/03_size.jpg" target="_blank"><img src="img/ozon-ball/03_size.jpg" alt="Слайд с размерами мяча" loading="lazy"></a>
+          <a href="img/ozon-ball/04_lifestyle.jpg" target="_blank"><img src="img/ozon-ball/04_lifestyle.jpg" alt="Фото мяча с подписью о дизайне" loading="lazy"></a>
+          <a href="img/ozon-ball/05_angles.jpg" target="_blank"><img src="img/ozon-ball/05_angles.jpg" alt="Мяч с трёх ракурсов" loading="lazy"></a>
+          <a href="img/ozon-ball/06_gift.jpg" target="_blank"><img src="img/ozon-ball/06_gift.jpg" alt="Мяч в подарочной коробке" loading="lazy"></a>
+        </div>
+        <p class="fit" style="margin-top:22px;color:var(--muted);font-size:14px"><b style="color:var(--text)">Подойдёт:</b> продавцам на Ozon и Wildberries, которым нужна карточка без фотостудии</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="prices">
+  <div class="wrap">
+    <div class="eyebrow reveal">Цены</div>
+    <h2 class="reveal">Понятные цены, <span class="serif">без скрытых платежей</span></h2>
+    <p class="section-lead reveal">Точную стоимость назову после короткого разговора о задаче. Ниже стартовые цены.</p>
+    <div class="prices">
+      <div class="price glow-card reveal">
+        <h3>Сайт-визитка или лендинг</h3>
+        <div class="sum">от 15 000 <small>₽</small></div>
+        <p>Одностраничный сайт с дизайном под ваш бизнес, адаптивом под телефон и размещением в интернете.</p>
+        <a href="https://t.me/div_web" class="btn small" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+      <div class="price glow-card reveal">
+        <h3>Бот для записи клиентов</h3>
+        <div class="sum">от 10 000 <small>₽</small></div>
+        <p>Услуги, выбор дня и времени, отмена записи, уведомления владельцу о каждой новой записи.</p>
+        <a href="https://t.me/div_web" class="btn small" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+      <div class="price glow-card reveal">
+        <h3>Бот: каталог и заказы</h3>
+        <div class="sum">от 15 000 <small>₽</small></div>
+        <p>Каталог товаров, корзина, оформление заказа с телефоном клиента, заказы сразу приходят вам.</p>
+        <a href="https://t.me/div_web" class="btn small" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+      <div class="price glow-card reveal">
+        <h3>Простой бот</h3>
+        <div class="sum">от 7 000 <small>₽</small></div>
+        <p>Бот-визитка, ответы на частые вопросы, меню с кнопками, тренажёр или викторина.</p>
+        <a href="https://t.me/div_web" class="btn small" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+      <div class="price glow-card hit reveal">
+        <span class="badge">Выгодно</span>
+        <h3>Сайт + бот вместе</h3>
+        <div class="sum">от 22 000 <small>₽</small></div>
+        <p>Сайт и Telegram-бот, связанные между собой: клиент находит вас на сайте и сразу записывается или заказывает.</p>
+        <a href="https://t.me/div_web" class="btn small pulse" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+      <div class="price glow-card reveal">
+        <h3>Поддержка</h3>
+        <div class="sum">от 3 000 <small>₽/мес</small></div>
+        <p>Меняю цены и тексты, слежу, чтобы бот работал без перебоев, делаю небольшие доработки.</p>
+        <a href="https://t.me/div_web" class="btn small" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+      <div class="price glow-card wide reveal">
+        <div>
+          <h3>Карточка для маркетплейса</h3>
+          <div class="sum">от 5 000 <small>₽</small></div>
+        </div>
+        <p>Для Ozon и Wildberries: 6 слайдов инфографики из ваших фото, рилз со звуком и видеообложка, описание с характеристиками.</p>
+        <a href="https://t.me/div_web" class="btn small" target="_blank" rel="noopener">Обсудить →</a>
+      </div>
+    </div>
+    <p class="price-note reveal">Работаю по предоплате 50%, остальное после сдачи проекта.</p>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="eyebrow reveal">Как работаю</div>
+    <h2 class="reveal">Просто и <span class="serif">без сюрпризов</span></h2>
+    <div class="steps">
+      <div class="step glow-card reveal"><h3>Созвон или переписка</h3><p>Узнаю о вашем бизнесе, задачах и сроках. Это бесплатно.</p></div>
+      <div class="step glow-card reveal"><h3>Предложение</h3><p>Описываю, что сделаю, к какому сроку и за какую сумму.</p></div>
+      <div class="step glow-card reveal"><h3>Разработка</h3><p>Показываю промежуточные версии и учитываю правки.</p></div>
+      <div class="step glow-card reveal"><h3>Запуск</h3><p>Размещаю проект в интернете и объясняю, как им пользоваться.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta reveal">
+      <div class="eyebrow">Контакты</div>
+      <h2>Обсудим ваш <span class="serif">проект?</span></h2>
+      <p>Напишите, чем занимаетесь и что хотите получить. Отвечу в течение дня и предложу решение.</p>
+      <div class="hero-actions">
+        <a href="https://t.me/div_web" class="btn pulse" target="_blank" rel="noopener">✈️ Написать в Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Игорь · Сайты и Telegram-боты для малого бизнеса</div>
+</footer>
+
+<script>
+  // Плавное появление блоков при прокрутке
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      el.classList.add("on");
+      io.unobserve(el);
+      // После появления карточка снова быстро реагирует на наведение
+      setTimeout(() => el.classList.add("done"), 1200);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.08 + "s";
+    io.observe(el);
+  });
+
+  // Видео ботов запускаются, только когда их видно на экране
+  const vio = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.play().catch(() => {}); } else { e.target.pause(); }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll(".phone video").forEach((v) => vio.observe(v));
+
+  // Кнопка звука у рилза
+  document.querySelectorAll("[data-sound]").forEach((btn) => {
+    const v = btn.parentElement.querySelector("video");
+    btn.addEventListener("click", () => {
+      v.muted = !v.muted;
+      if (!v.muted) { v.currentTime = 0; v.play().catch(() => {}); }
+      btn.textContent = v.muted ? "🔇 Включить звук" : "🔊 Выключить звук";
+    });
+  });
+
+  // Подсветка рамки карточки там, где находится курсор
+  document.querySelectorAll(".glow-card").forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", e.clientX - r.left + "px");
+      card.style.setProperty("--my", e.clientY - r.top + "px");
+    });
+  });
+</script>
+</body>
+</html>
