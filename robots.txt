@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /img/logo/preview.html
+
+Sitemap: https://divwebstudio.github.io/sitemap.xml
